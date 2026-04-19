@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
   View, Text, TextInput, Pressable, ScrollView, StyleSheet, Alert, Image,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as ImagePicker from 'expo-image-picker';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../../App';
@@ -16,6 +16,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Empresa'>;
 
 export default function EmpresaScreen({ navigation }: Props) {
   const { state, updateCompany } = useApp();
+  const insets = useSafeAreaInsets()
   const accent = state.settings.accentColor;
 
   const [form, setForm] = useState<CompanyProfile>(state.company);
@@ -128,7 +129,7 @@ export default function EmpresaScreen({ navigation }: Props) {
         </View>
       </ScrollView>
 
-      <View style={styles.footer}>
+      <View style={[ styles.footer, { paddingBottom: insets.bottom + 4 }]}>
         <PosButton variant="secondary" label="Cancelar" onPress={() => navigation.goBack()} style={{ flex: 1 }} />
         <PosButton label="Guardar" icon="check" onPress={handleSave} style={{ flex: 2 }} />
       </View>
